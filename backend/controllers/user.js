@@ -1,4 +1,6 @@
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+
 const User = require('../models/user');
 
 exports.signup = (req, res, next) => {
@@ -16,9 +18,28 @@ exports.signup = (req, res, next) => {
 };
 
 exports.login = (req, res, next) => {
-    console.log(req.body);
-    res.status(201).json({
-        message: 'vous êtes connecté'
-    });
-    //vérifie les info de l'utilisateur et renvoie l'identifiant userID depuis la BDD et un jeton Web JSON signé contenant userID
+    User.findOne({ email: req.body.email })     //on cherche dans la BDD
+        .then( user => {
+            if (!user) {
+                return res.status(401).json({ error: 'utilisateur inconnu !' });
+            } else {
+                bcrypt.compare(req.body.password, user.password)
+                    .then( valid => {
+                        if (!valid) {
+                            return res.status(401).json({ error: 'mot de passe incorrect !' });
+                        } else {    //renvoie l'identifiant userID depuis la BDD et un jeton Web JSON signé contenant userID
+                            res.status(200).json({
+                                userId: user._id,
+                                token: jwt.sign(
+                                    { userId: user._id },
+                                    'RANDOM_TOKEN_SECRET',
+                                    { expiresIn: '24h' }
+                                )
+                            });
+                        }
+                    })
+                    .catch(error => res.status(500).json({ error }));
+            }
+        })
+        .catch(error => res.status(500).json({ error }));
 };
