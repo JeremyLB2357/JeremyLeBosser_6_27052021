@@ -8,6 +8,8 @@ const app = express();
 //importation des routes
 const userRoutes = require('./routes/user');
 const sauceRoutes = require('./routes/sauce');
+//importation de l'authentification
+const auth = require('./middleware/auth');
 
 //connexion à la bas e de donnée mongoDB Atlas
 mongoose.connect('mongodb+srv://Galad:j3r3myl3arn@cluster0.sf1z2.mongodb.net/test?retryWrites=true&w=majority',
@@ -29,7 +31,7 @@ app.use((req, res, next) => {
 app.use(bodyParser.json());
 
 app.use('/api/auth', userRoutes);
-app.use('/api/sauces', sauceRoutes);
+app.use('/api/sauces', auth, sauceRoutes);
 
 /*app.use((req, res) => {
     res.json({ message: 'Votre requete a bien été reçue !' });
