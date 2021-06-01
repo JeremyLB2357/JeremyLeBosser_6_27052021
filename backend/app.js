@@ -10,12 +10,12 @@ const userRoutes = require('./routes/user');
 const sauceRoutes = require('./routes/sauce');
 
 //connexion à la bas e de donnée mongoDB Atlas
-/*mongoose.connect('mongodb+srv://Galad:j3r3myl3arn@cluster0.sf1z2.mongodb.net/test?retryWrites=true&w=majority',
+mongoose.connect('mongodb+srv://Galad:j3r3myl3arn@cluster0.sf1z2.mongodb.net/test?retryWrites=true&w=majority',
     {   useNewUrlParser: true,
         useUnifiedTopology: true })
     .then(() => console.log('Connexion à MongoDB réussie !'))
     .catch(() => console.log('Connexion à MongoDB échouée !'));
-*/
+
 
 //middleware qui permet d'accéder à notre API peut importe l'origine
 app.use((req, res, next) => {
