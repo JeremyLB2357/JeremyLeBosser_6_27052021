@@ -1,3 +1,5 @@
+const Sauce = require('../models/sauce');
+
 exports.showAll = (req, res, next) => {
     console.log('test');
     res.status(201).json({
