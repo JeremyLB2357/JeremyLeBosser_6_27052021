@@ -17,6 +17,7 @@ exports.showOne = (req, res, next) => {
 };
 
 exports.addOne = (req, res, next) => {
+    console.log("j'ajoute une sauce !");
     const sauceSended = JSON.parse(req.body.sauce);
     const sauce = new Sauce({
         userId: sauceSended.userId,
@@ -40,10 +41,11 @@ exports.addOne = (req, res, next) => {
 };
 
 exports.modifyOne = (req, res, next) => {
-    console.log(req.body);
-    res.status(201).json({
-        message: 'modification faite !'   
-    });
+    const sauceUpdated = JSON.parse(req.body.sauce);
+    console.log('je modifie une sauce !');
+    Sauce.updateOne({ _id: req.params.id }, { ...sauceUpdated, _id: req.params.id })
+        .then(() => res.status(200).json({ message: 'Modifications faites !' }))
+        .catch(error => res.status(400).json ({ error }));
     //MAJ de la sauce dans la BDD
 };
 
