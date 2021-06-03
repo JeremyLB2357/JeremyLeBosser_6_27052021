@@ -49,10 +49,10 @@ exports.modifyOne = (req, res, next) => {
     //MAJ de la sauce dans la BDD
 };
 
-exports.deleteOne = (req, res, next) => {
-    console.log(req.body);
-    res.status(201).json({
-        message: 'suppression faite !'   
-    });
+exports.delete = (req, res, next) => {
+    console.log('je supprime une sauce !');
+    Sauce.deleteOne({ _id: req.params.id })
+        .then(() => res.status(200).json({ message: 'Sauce supprimée !' }))
+        .catch(error => res.status(400).json({ error }));
     //supprime la sauce de la BDD
 };

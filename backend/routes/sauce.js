@@ -7,7 +7,7 @@ const sauceCtrl = require('../controllers/sauce');
 
 router.post('/', multer().any(), sauceCtrl.addOne);
 router.put('/:id', multer().any(),sauceCtrl.modifyOne);
-//router.delete('/:id', sauceCtrl.deleteOne);
+router.delete('/:id', sauceCtrl.delete);
 router.use('/:id', sauceCtrl.showOne);
 router.use('/', sauceCtrl.showAll);
 
