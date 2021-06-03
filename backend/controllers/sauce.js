@@ -1,10 +1,10 @@
 const Sauce = require('../models/sauce');
 
 exports.showAll = (req, res, next) => {
-    console.log('test');
-    res.status(201).json({
-        message: 'voici toutes les sauces'   
-    });
+    console.log('je cherche toutes les sauces');
+    Sauce.find()
+        .then(sauces => res.status(200).json(sauces))
+        .catch(error => res.status(400).json({ error }));
     //renvoie le tableau de toutes les sauces de la BDD
 };
 
