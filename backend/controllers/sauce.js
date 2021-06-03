@@ -9,10 +9,10 @@ exports.showAll = (req, res, next) => {
 };
 
 exports.showOne = (req, res, next) => {
-    console.log(req.body);
-    res.status(201).json({
-        message: 'voici votre sauce'
-    });
+    console.log('je cherche une sauce spécifique !');
+    Sauce.findOne({ _id: req.params.id })
+        .then(sauce => res.status(200).json(sauce))
+        .catch(error => res.status(404).json({ error }));
     //renvoie la sauce avec l'ID fourni
 };
 
