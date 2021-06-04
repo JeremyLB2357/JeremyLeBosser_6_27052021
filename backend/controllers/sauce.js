@@ -25,16 +25,18 @@ exports.addOne = (req, res, next) => {
         manufacturer: sauceSended.manufacturer,
         description: sauceSended.description,
         mainPepper: sauceSended.mainPepper,
-        imageUrl: 'later',
+        imageUrl: 'later'/*`${req.protocol}://${req.get('host')}/images/${req.files[0].originalname}`*/,
         heat: sauceSended.heat,
         likes: 0,
         dislikes: 0,
         usersLiked: [],
         usersDisled: []
     });
-    sauce.save()
+    console.log(req.files[0].originalname);
+    res.status(200).json({ message: 'test' });
+    /*sauce.save()
         .then(() => res.status(201).json({ message: 'Sauce enregistrée !'}))
-        .catch(error => res.status(400).json({ error}));
+        .catch(error => res.status(400).json({ error}));*/
     // après l'avoir analysée
     //capture et enregistre les info de la sauce dans la BDD
     //ajoute 0 like et 0 dislike

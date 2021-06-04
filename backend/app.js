@@ -2,6 +2,7 @@ const { json } = require('express');
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const path = require('path');
 
 const app = express();
 
@@ -28,6 +29,7 @@ app.use((req, res, next) => {
 //middleware permettant d'extraire l'objet JSON de la demande
 app.use(bodyParser.json());
 
+app.use('/images', express.static(path.join(__dirname, 'images')));
 app.use('/api/auth', userRoutes);
 app.use('/api/sauces', sauceRoutes);
 
