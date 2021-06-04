@@ -32,19 +32,18 @@ exports.addOne = (req, res, next) => {
         usersLiked: [],
         usersDisled: []
     });
-    console.log(req.files[0].originalname);
-    res.status(200).json({ message: 'test' });
-    /*sauce.save()
+    sauce.save()
         .then(() => res.status(201).json({ message: 'Sauce enregistrée !'}))
-        .catch(error => res.status(400).json({ error}));*/
+        .catch(error => res.status(400).json({ error}));
     // après l'avoir analysée
     //capture et enregistre les info de la sauce dans la BDD
     //ajoute 0 like et 0 dislike
 };
 
 exports.modifyOne = (req, res, next) => {
-    const sauceUpdated = JSON.parse(req.body.sauce);
     console.log('je modifie une sauce !');
+    const sauceUpdated = JSON.parse(req.body.sauce);
+    sauceUpdated.imageUrl = `${req.protocol}://${req.get('host')}/images/${req.files[0].filename}`;
     Sauce.updateOne({ _id: req.params.id }, { ...sauceUpdated, _id: req.params.id })
         .then(() => res.status(200).json({ message: 'Modifications faites !' }))
         .catch(error => res.status(400).json ({ error }));
