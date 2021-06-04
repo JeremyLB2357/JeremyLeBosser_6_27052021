@@ -25,7 +25,7 @@ exports.addOne = (req, res, next) => {
         manufacturer: sauceSended.manufacturer,
         description: sauceSended.description,
         mainPepper: sauceSended.mainPepper,
-        imageUrl: 'later',
+        imageUrl: `${req.protocol}://${req.get('host')}/images/${req.files[0].filename}`,
         heat: sauceSended.heat,
         likes: 0,
         dislikes: 0,
