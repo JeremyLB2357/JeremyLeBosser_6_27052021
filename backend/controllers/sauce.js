@@ -43,8 +43,11 @@ exports.addOne = (req, res, next) => {
 
 exports.modifyOne = (req, res, next) => {
     console.log('je modifie une sauce !');
-    const sauceUpdated = JSON.parse(req.body.sauce);
-    sauceUpdated.imageUrl = `${req.protocol}://${req.get('host')}/images/${req.files[0].filename}`;
+    const sauceUpdated = req.files ?
+        { 
+            ...JSON.parse(req.body.sauce),
+            imageUrl: `${req.protocol}://${req.get('host')}/images/${req.files[0].filename}`
+        } : { ...req.body };
     Sauce.updateOne({ _id: req.params.id }, { ...sauceUpdated, _id: req.params.id })
         .then(() => res.status(200).json({ message: 'Modifications faites !' }))
         .catch(error => res.status(400).json ({ error }));
