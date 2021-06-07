@@ -1,4 +1,5 @@
 const Sauce = require('../models/sauce');
+const fs = require('fs');
 
 exports.showAll = (req, res, next) => {
     console.log('je cherche toutes les sauces');
@@ -52,8 +53,18 @@ exports.modifyOne = (req, res, next) => {
 
 exports.delete = (req, res, next) => {
     console.log('je supprime une sauce !');
-    Sauce.deleteOne({ _id: req.params.id })
+    /*Sauce.deleteOne({ _id: req.params.id })
         .then(() => res.status(200).json({ message: 'Sauce supprimée !' }))
-        .catch(error => res.status(400).json({ error }));
+        .catch(error => res.status(400).json({ error }));*/
+    Sauce.findOne({ _id: req.params.id })
+        .then(sauce => {
+            const filename = sauce.imageUrl.split('/images/')[1];
+            fs.unlink(`images/${filename}`, () => {
+                Sauce.deleteOne({ _id: req.params.id })
+                    .then(() => res.status(200).json({ message: 'Sauce supprimée !' }))
+                    .catch(error => res.status(400).json({ error }));
+            });
+        })
+        .catch(error => res.status(500).json({ error }));
     //supprime la sauce de la BDD
 };
