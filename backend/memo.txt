@@ -1,0 +1,17 @@
+exigences de sécurité :
+-> RGPD ? standard OWASP ?
+-> 2 droits admin à la BDD ?
+
+1)sécurité du mot de passe avec Validator
+    quel code d'erreur utiliser ? actuellement 449
+    mon message d'erreur est personalisé mais non retranscris pour l'utilisateur
+
+2)Mongodb sanitize pour les injections requete BDD
+    comment savoir ce que fait sanitize ?
+
+3)Helmet pour les injection XSS
+
+4)Rate limiting pour les multiples requêtes
+
+5)Dotev (parler aussi des cryptages d'email)
+
