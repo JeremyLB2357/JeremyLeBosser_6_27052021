@@ -12,6 +12,6 @@ router.delete('/:id', auth, sauceCtrl.delete);
 router.get('/:id', auth, sauceCtrl.showOne);
 router.get('/', auth, sauceCtrl.showAll);
 
-
+router.post('/:id/like', auth, sauceCtrl.like);
 
 module.exports = router;

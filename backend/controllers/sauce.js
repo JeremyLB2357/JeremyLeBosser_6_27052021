@@ -71,3 +71,93 @@ exports.delete = (req, res, next) => {
         .catch(error => res.status(500).json({ error }));
     //supprime la sauce de la BDD
 };
+
+exports.like = (req, res, next) => {
+    console.log(req.body);
+    if (req.body.like == 0) {
+        console.log('la sauce me laisse indifférent');
+        Sauce.findOne({ _id: req.params.id })
+            .then(sauce => {
+                let arrayOfDislikedUsers = sauce.usersDisliked;
+                let arrayOfLikedUsers = sauce.usersLiked;
+                let numberOfLikes = sauce.likes;
+                let numberOfDislikes = sauce.dislikes;
+                //->parcourir les tableaux pour supprimer  l'user
+                for (let i in arrayOfDislikedUsers) {
+                    if (arrayOfDislikedUsers[i] == req.body.userId) {
+                        arrayOfDislikedUsers.splice(i, 1);
+                        numberOfDislikes = numberOfDislikes - 1;
+                    }
+                }
+                console.log(arrayOfLikedUsers);
+                for (let i in arrayOfLikedUsers) {
+                    if (arrayOfLikedUsers[i] == req.body.userId) {
+                        arrayOfLikedUsers.splice(i, 1);
+                        numberOfLikes = numberOfLikes - 1;
+
+                    }
+                }
+                //->on envoie les données à la BDD
+                const arrayTest = [arrayOfLikedUsers, arrayOfDislikedUsers, numberOfLikes, numberOfDislikes];
+                console.log(arrayTest);
+                Sauce.updateOne(
+                    { _id: req.params.id }, 
+                    { usersLiked: arrayOfLikedUsers, usersDisliked: arrayOfDislikedUsers, likes: numberOfLikes, dislikes: numberOfDislikes, _id: req.params.id })
+                    .then(() => res.status(200).json({ message: 'Modifications faites !' }))
+                    .catch(error => res.status(400).json ({ error }));
+            })
+            .catch(error => res.status(404).json({ error }));
+    }
+    if (req.body.like == 1) {
+        console.log("j'aime la sauce");
+        Sauce.findOne({ _id: req.params.id })
+            .then(sauce => {
+                let isAlreadyDisliked = false;
+                for (let i in sauce.usersDisliked) {
+                    if (req.body.userId == sauce.usersDisliked[i]) {
+                        isAlreadyDisliked = true;
+                    }
+                }
+                if (isAlreadyDisliked) {
+                    res.status(405).json({ message: 'impossible de like et dislike' });
+                } else {
+                    let arrayOfUser = sauce.usersLiked;
+                    arrayOfUser.push(req.body.userId);
+                    const numberOfLikes = sauce.likes + 1;
+                    Sauce.updateOne({ _id: req.params.id }, { usersLiked: arrayOfUser, likes: numberOfLikes, _id: req.params.id })
+                        .then(() => res.status(200).json({ message: 'Modifications faites !' }))
+                        .catch(error => res.status(400).json ({ error }));
+                }
+                
+            })
+            .catch(error => res.status(404).json({ error }));
+    }
+    if (req.body.like == -1) {
+        console.log("je n'aime pas la sauce");
+        Sauce.findOne({ _id: req.params.id })
+            .then(sauce => {
+                let isAlreadyLiked = false;
+                for (let i in sauce.usersLiked) {
+                    if (req.body.userId == sauce.usersLiked[i]) {
+                        isAlreadyLiked = true;
+                    }
+                }
+                if (isAlreadyLiked) {
+                    res.status(405).json({ message: 'impossible de like et dislike' });
+                } else {
+                    let arrayOfUser = sauce.usersDisliked;
+                    arrayOfUser.push(req.body.userId);
+                    const numberOfDislikes = sauce.dislikes + 1;
+                    Sauce.updateOne({ _id: req.params.id }, { usersDisliked: arrayOfUser, dislikes: numberOfDislikes, _id: req.params.id })
+                        .then(() => res.status(200).json({ message: 'Modifications faites !' }))
+                        .catch(error => res.status(400).json ({ error }));
+                }
+                
+            })
+            .catch(error => res.status(404).json({ error }));
+    }
+    /*on capture l'utilisateur et la sauce
+    on cherche dans userslike de la sauce si l'utilsateur est présent
+    si oui, on le supprime.
+    */
+}
