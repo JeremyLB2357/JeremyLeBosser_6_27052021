@@ -10,8 +10,10 @@ exigences de sécurité :
     comment savoir ce que fait sanitize ?
 
 3)Helmet pour les injection XSS
+    lire la documentation
 
 4)Rate limiting pour les multiples requêtes
+    ok
 
 5)Dotev (parler aussi des cryptages d'email)
 
