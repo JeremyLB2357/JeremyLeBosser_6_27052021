@@ -3,7 +3,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const path = require('path');
-
+const helmet = require('helmet');
 
 const app = express();
 
@@ -26,6 +26,9 @@ app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
     next();
 });
+
+//middleware permettant de prévenir les attaques XSS
+app.use(helmet());
 
 //middleware permettant d'extraire l'objet JSON de la demande
 app.use(bodyParser.json());
