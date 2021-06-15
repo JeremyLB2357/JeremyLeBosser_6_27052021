@@ -14,7 +14,8 @@ exigences de sécurité :
 4)Rate limiting pour les multiples requêtes
     ok
 
-5)Dotev (parler aussi des cryptages d'email)
+5)Dotev
+    ok mais comment transmettre à l'examinateur ?
 
 6)parer l'exposition de données sensibles
     crypto js pour les adresses mail
@@ -24,4 +25,11 @@ on n'utilise pas de fichier au format XML
 
 8)désérialisation non sécurisée
 on valide nos entrées avec sanitize
+
+question sur la route delete / modifier :
+doit on supprimer la photo ?
+44
+76
+02
+18
 
