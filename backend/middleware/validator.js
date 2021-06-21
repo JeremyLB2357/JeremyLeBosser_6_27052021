@@ -12,8 +12,8 @@ module.exports = (req, res, next) => {
             } else {
                 throw "le mot de passe est trop faible";
             }
-        } catch (e) {
-            res.status(449).json({ error: e});
+        } catch (error) {
+            res.status(400).json({ error: error});
         }
     }
 }

@@ -14,7 +14,7 @@ exigences de sécurité :
 4)Rate limiting pour les multiples requêtes
     ok
 
-5)Dotev
+5)Dotenv
     ok mais comment transmettre à l'examinateur ?
 
 6)parer l'exposition de données sensibles
@@ -28,8 +28,11 @@ on valide nos entrées avec sanitize
 
 question sur la route delete / modifier :
 doit on supprimer la photo ?
-44
-76
-02
-18
+comment prévenir le surstockage de photo ?
+
+question sur la modification et la suppression :
+sécurité supplémentaire
+
+ce que m'a apporté le projet
+ce que je peux améliorer
 

@@ -20,24 +20,25 @@ exports.signup = (req, res, next) => {
 };
 
 exports.login = (req, res, next) => {
-    User.find()
+    User.find()     //on va chercher tous les utilisateurs
         .then(users => {
-            for (let i in users) {
+            for (let i in users) {      //pour chaque utilisateur, on décrypte l'email afin de le comparer à l'email saisi
                 const bytes = cryptoJS.AES.decrypt(users[i].email, 'RANDOM_EMAIL_SECRET');
                 const originalEmail = bytes.toString(cryptoJS.enc.Utf8);
+                //si l'email saisie est dans la BDD, on retourne l'email crypté de l'user trouvé
                 if (originalEmail == req.body.email) {
-                    console.log(users[i].email);
                     return users[i].email;
                 }
             }
             throw 'utilisateur inconnu !';
         })
-        .then(cryptedUser => {
+        .then(cryptedUser => {      //on va chercher l'utilisateur qui essaie de se connecter
             User.findOne({ email: cryptedUser })
             .then( user => {
                 if (!user) {
                     return res.status(401).json({ error: 'utilisateur inconnu !' });
                 } else {
+                    //on vérifie le mot de passe renseigné
                     bcrypt.compare(req.body.password, user.password)
                         .then( valid => {
                             if (!valid) {
