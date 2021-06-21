@@ -3,15 +3,21 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const path = require('path');
+const helmet = require('helmet');
+const dotenv = require('dotenv').config();
 
 const app = express();
+//utilisation de Dotenv
+const dbUser = process.env.DB_USER;
+const dbPass = process.env.DB_PASS;
+const dbCluster = process.env.DB_CLUSTER;
 
 //importation des routes
 const userRoutes = require('./routes/user');
 const sauceRoutes = require('./routes/sauce');
 
 //connexion à la base de donnée mongoDB Atlas
-mongoose.connect('mongodb+srv://Galad:j3r3myl3arn@cluster0.sf1z2.mongodb.net/test?retryWrites=true&w=majority',
+mongoose.connect(`mongodb+srv://${dbUser}:${dbPass}@${dbCluster}?retryWrites=true&w=majority`,
     {   useNewUrlParser: true,
         useUnifiedTopology: true })
     .then(() => console.log('Connexion à MongoDB réussie !'))
@@ -25,6 +31,9 @@ app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
     next();
 });
+
+//middleware permettant de prévenir les attaques XSS
+app.use(helmet());
 
 //middleware permettant d'extraire l'objet JSON de la demande
 app.use(bodyParser.json());

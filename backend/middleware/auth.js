@@ -8,15 +8,12 @@ module.exports = (req, res, next) => {
         const userId = decodedToken.userId;
         User.findOne({ _id: userId })
             .then(() => {
-                console.log('je passe à la suite');
                 next();
             })
             .catch(() => {
                 throw 'Invalid user ID';
             });
-    } catch {
-        res.status(401).json({
-            error: new Error('Invalid request!')
-        });
+    } catch (error) {
+        res.status(401).json({ error: error });
     }
 };
