@@ -1,38 +1,15 @@
-exigences de sécurité :
--> 2 droits admin à la BDD ?
+supprimer le middleware capture.js
 
-1)sécurité du mot de passe avec Validator
-    quel code d'erreur utiliser ? actuellement 449
-    mon message d'erreur est personalisé mais non retranscris pour l'utilisateur
-
-2)Mongodb sanitize pour les injections requete BDD
-    ok
-
-3)Helmet pour les injection XSS
-    ok
-
-4)Rate limiting pour les multiples requêtes
-    ok
-
-5)Dotenv
-    ok mais comment transmettre à l'examinateur ?
-
-6)parer l'exposition de données sensibles
-    crypto js pour les adresses mail
-
-7)XEE
-on n'utilise pas de fichier au format XML
-
-8)désérialisation non sécurisée
-on valide nos entrées avec sanitize
-
-question sur la route delete / modifier :
-doit on supprimer la photo ?
-comment prévenir le surstockage de photo ?
-
-question sur la modification et la suppression :
-sécurité supplémentaire
 
 ce que m'a apporté le projet
 ce que je peux améliorer
 
+user1@gmail.com
+y3X@65@qE
+user2@gmail.com
+5Cpx@7@9W
+user3@gmail.com
+@@C8S3b7e
+
+evaluateur@oc.fr    
+Projet6@jlb
